@@ -2,11 +2,7 @@
 
 Adapted from [The Official raywenderlich.com C# Style Guide](https://github.com/raywenderlich/c-sharp-style-guide).
 
-Our overarching goals are **conciseness**, **readability** and **simplicity**. Also, this guide is written to keep **Unity** in mind.
-
-## Inspiration
-
-This style guide is based on C# and Unity conventions.
+Our overarching goals are **conciseness**, **readability** and **simplicity**.
 
 ## Table of Contents
 
@@ -62,35 +58,39 @@ Methods are written in **PascalCase**. For example `DoSomething()`.
 
 ### Fields
 
-All non-static fields are written **camelCase**. Per Unity convention, this includes **public fields** as well.
+All non-static, non-readonly fields are written **camelCase** with an underscore
+prefix.
 
 For example:
 
 ```csharp
 public class MyClass
 {
-    public int publicField;
-    int packagePrivate;
-    private int myPrivate;
-    protected int myProtected;
+    public int _publicField;
+    int _packagePrivate;
+    private int _myPrivate;
+    protected int _myProtected;
 }
 ```
 
 **AVOID:**
 
 ```csharp
-private int _myPrivateVariable
+public int MyPublicVariable;
+private int myPrivateVariable
 ```
 
 **PREFER:**
 
 ```csharp
-private int myPrivateVariable
+private int _myPrivateVariable
 ```
 
-Static fields are the exception and should be written in **PascalCase**:
+Static fields, readonly fields, and constants should be written in
+**PascalCase**:
 
 ```csharp
+public readonly string TheUltimateQuestion;
 public static int TheAnswer = 42;
 ```
 
@@ -109,13 +109,15 @@ void DoSomething(Vector3 Location)
 void DoSomething(Vector3 location)
 ```
 
-Single character values are to be avoided except for temporary looping variables.
+Single character values are to be avoided except for temporary looping
+variables.
 
 ### Delegates
 
 Delegates are written in **PascalCase**.
 
-When declaring delegates, DO add the suffix **EventHandler** to names of delegates that are used in events.
+When declaring delegates, DO add the suffix **EventHandler** to names of
+delegates that are used in events.
 
 **AVOID:**
 
@@ -128,7 +130,8 @@ public delegate void Click()
 public delegate void ClickEventHandler()
 ```
 
-DO add the suffix **Callback** to names of delegates other than those used as event handlers.
+DO add the suffix **Callback** to names of delegates other than those used as
+event handlers.
 
 **AVOID:**
 
@@ -143,7 +146,8 @@ public delegate void RenderCallback()
 
 ### Events
 
-Events should be written in **PascalCase**. Never prefix events with a prefix like **On**.
+Events should be written in **PascalCase**. Never prefix events with a prefix
+like **On**.
 
 **AVOID:**
 
@@ -181,7 +185,8 @@ findPostById
 
 ### Access Level Modifiers
 
-Non-default access level modifiers should be explicitly defined for classes, methods and member variables.
+Non-default access level modifiers should be explicitly defined for classes,
+methods and member variables. Default access level modifiers should be omitted.
 
 ### Fields & Variables
 
@@ -202,7 +207,8 @@ string twitterHandle;
 
 ### Classes
 
-Exactly one class per source file, although inner classes are encouraged where scoping appropriate.
+Exactly one class per source file, although inner classes are encouraged where
+scoping appropriate.
 
 ### Interfaces
 
@@ -268,7 +274,7 @@ CoolUiWidget widget =
 
 ### Line Length
 
-Lines should be no longer than **100** characters long.
+Lines should be no longer than **120** characters long.
 
 ### Vertical Spacing
 
@@ -341,7 +347,8 @@ if (someTest)
 ```
 ## Switch Statements
 
-Always include a `default` case in switch statements. Cases that should "never happen" are a rich source of bugs.
+Always include a `default` case in switch statements. Cases that should "never
+happen" are a rich source of bugs.
 
 **AVOID:**
 
@@ -365,7 +372,7 @@ switch (variable)
     case 2:
         break;
     default:
-        Debug.Log("This should never happen!");
+        Log("This should never happen!");
         break;
 }
 ```
@@ -385,5 +392,3 @@ string colour = "red";
 ```csharp
 string color = "red";
 ```
-
-The exception here is `MonoBehaviour` as that's what the class is actually called.
